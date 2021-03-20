@@ -1,0 +1,371 @@
+%% journalrebuttal.tex
+%% Copyright 2020 Pranav Hosangadi
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is Pranav Hosangadi.
+%
+% This work consists of the file journalrebuttal.cls and the demo
+% file journalrebuttal.tex
+%% 
+%%
+%% journalrebuttal.tex
+%% Example usage for journalrebuttal.cls: 
+%%    A LaTeX class to create rebuttal documents for journal
+%%    reviews
+%% Created: 2020-06-28
+%% Author: Pranav Hosangadi (pranav.hosangadi@gmail.com)
+%% https://github.com/pranavh/JournalRebuttal_LaTeX
+%% Last Modified: 2020-06-29
+%% Version: 1.0
+%%
+\documentclass[12pt]{journalrebuttal}
+
+\title{Field trial of programmable L3 VPN service deployment using SDN-Based Multi-domain Service Provisioning over IP/Optical networks}
+
+\author{
+Samier Barguil, Victor Lopez, Cristyan Manta-Caro, Arturo Mayoral Lopez De Lerma,\\
+Oscar Gonzalez De Dios, Edward Echeverry, Juan Pedro Fernandez-Palacios, Janne Karvonen,\\
+Jutta Kemppainen, Natalia Maya, and Ricard Vilalta}
+
+\journal{IEEE Networks Magazine}
+\manuscriptid{NETWORK-21-00006.R1}
+
+\usepackage{verbatim}
+
+%% You can define Note commands using the \ColorNote command 
+%% provided in the class. 
+\newcommand{\PHNote}[1]{\ColorNote{red}{PH}{#1}}
+
+
+\begin{document}
+%\pagenumbering{arabic}
+\maketitle
+
+\vspace{0.5cm}
+\makerule
+\section*{Overview}
+
+We would like to thank the reviewers for the fruitful feedback as well as their time to carry out the review. We have incorporated most of their suggestions, which have resulted in a significant improve of the paper.
+
+\nextreviewer
+
+\begin{revcomment}
+1,23,L: It’s not clear how a change in footprint is required to upgrade the network to support SDN.
+\end{revcomment}
+
+\begin{response}
+Historically, the service providers networks have been characterized by their heterogeneity, mainly because the communications networks have been built based on complicated network fusions. This constant integration has created heterogeneous deployments that constantly mix device manufacturers, transport technologies (IP, DWDM, Radio, ATM, Etc.) or QoS policies. Hence, this system and requirements mixture highly limits how the service providers can innovate or introduce new functionalities in the network. The iFusion architecture allows the coexistence of legacy and SDN ready devices to start the continuous migration of the whole set of functionalities in the network using a hybrid SDN approach; this will be cost-effective and less disruptive in fully operative networks.
+
+This antecedent has been including as part of the introduction with its corresponding reference. 
+\end{response}
+
+\begin{revcomment}
+1,48,L: “facts with generic hardware” Not sure what facts means in this context.
+\end{revcomment}
+
+\begin{response}
+The authors were referring to the open standard hardware integration on the white-boxes. The term "fact" has been replaced by "made" to bring more clarity. 
+
+\end{response}
+
+\begin{revcomment}
+2,45,L: BGP is not defined, and PE is defined later in the paper.
+\end{revcomment}
+
+\begin{response}
+The authors have included a new table (Table 1) with all the paper's abbreviations to clarify it to the reader.  Additionally, the authors expanded the line from "BGP PE" to "the provider edge (PE) VPNs".
+\end{response}
+
+\begin{revcomment}
+Figure 2: There is no distinction between optical and microwave networks.  Since you don’t use a microwave network, that could be moved to the future work section.
+\end{revcomment}
+
+\begin{response}
+The authors updated Figure 2, including more detail on the interfaces, protocols between the layers, and each of the control elements' requirements. The orchestration layer has been included on top of the SDTN as it is described across the document. 
+
+The author included the Microwave controller as a reference in Figure 2. In the Future Work section, the authors added the  MW integration with the SDTN.
+\end{response}
+
+\begin{revcomment}
+OSS/Orchestration should be in this diagram since they are discussed below.
+\end{revcomment}
+
+\begin{response}
+The authors updated Figure 2, including more detail on the interfaces, protocols between the layers, and each of the control elements' requirements. 
+\end{response}
+
+\begin{revcomment}
+3,51,L: This line states that the NBI for the SDNc is used by the orchestrator and the OSS while the next line states that the SDTN controller uses it.  Please clarify, is the SDTN controller actually an orchestrator or list it as a user of the SDNc NBI.
+\end{revcomment}
+
+\begin{response}
+The authors replaced "SDN Orchestatror" with the term "SDTN controller". The authors included an additional comment because some use cases require direct connectivity from the OSS layer to the SDN control layer (a.k. Performance management).
+\end{response}
+
+\begin{revcomment}
+3,52,L: It sounds like SDTN is a network and the SDTN controller is what controls it.  Throughout the paper, it appears that SDTN is used to reference the SDTN controller.  I would suggest that you either use SDTN controller or SDTNc when you reference the controller versus the network.  Also add some clarity around what the SDTN is.
+\end{revcomment}
+
+\begin{response}
+SDTN has been replaced by "SDTN Controller" across the document to unify the concept and clarify for the reader. 
+\end{response}
+
+\begin{revcomment}
+3,53,R: You spell out SDN controller rather than use your term SDNc.
+\end{revcomment}
+
+\begin{response}
+The abbreviation SDNc has been populated across the document to unify the way to refer each element on the architecture. 
+\end{response}
+
+\begin{revcomment}
+4,13,L: Why did you choose IETF YANG for the NBI and OpenConfig for the SBI?
+\end{revcomment}
+
+\begin{response}
+The IETF YANG for the NBI and OpenConfig for the SBI selection was done based on the support of the supplier to the models. The IETF/Openconfig adoption is wider than any other alternative for the NBI and SBI, respectively. 
+
+To clarify this selection the following sentenses has been added: 
+\begin{itemize}
+\item The IETF YANG for the NBI  was done based on the support of the supplier to the models. The IETF adoption is wider than any other alternative for the NBI.
+
+\item OpenConfig started as a collaborative work between Google, some vendors and Service Providers, and now it is an industrial reference for device-specific configuration purposes. The philosophy behind OpenConfig is to add functionality to the device models based on the operator’s needs to avoid complex models which can not be implemented in real networks.
+\end{itemize}
+
+\end{response}
+
+\begin{revcomment}
+3,53,L: Should this be SDTN controller.  I found this confusing.
+\end{revcomment}
+
+\begin{response}
+The authors replaced "SDN Orchestatror" with the term "SDTN Controller". 
+\end{response}
+
+\begin{revcomment}
+5,45,L: A diagram would help with the HLs.
+\end{revcomment}
+
+\begin{response}
+The HLx labels have been included in the Figure 2, to represent the location of each router in the testbed. 
+\end{response}
+
+\begin{revcomment}
+6,8,R: I’m not familiar with the phrase “key angular stone.”
+\end{revcomment}
+
+\begin{response}
+The authors rephrased the sentences in order to provide a better readability: "It is fundamental for the SDN adoption in service provider networks defining the data models and protocols used across the components."
+\end{response}
+
+\begin{revcomment}
+7,51,L: “is” is not needed
+\end{revcomment}
+
+\begin{response}
+Thank you for the comment. The authors have corrected typos and proofread the document to improve English usage and readability. 
+\end{response}
+
+\nextreviewer
+
+\begin{revcomment}
+There are grammar errors (e.g., in the first few sentence in Abstract), so the authors are required to carefully proofread the paper.
+\end{revcomment}
+
+\begin{response}
+Thank you for the comment. The authors have corrected typos and proofread the manuscript to improve English usage and readability.
+\end{response}
+
+\begin{revcomment}
+The figures are vague. So, they should be redrawn for clearness.
+\end{revcomment}
+
+\begin{response}
+We agree with reviewer's comment. To fix this issue, the figures have been redraw to improve its quality, the changes in each figure are the following:
+\begin{itemize}
+    \item Figure 1: 
+    \begin{itemize}
+        \item Labels to explain each component of the figure.
+        \item Make the font size bigger to increase readability.
+    \end{itemize}
+    \item Figure 2:
+    \begin{itemize}
+        \item The authors Included two upper layers (application and Orchestration layer). 
+        \item Protocols and interfaces used between layer.
+        \item The HLx label in the Network layer.
+        \item Make the font size bigger to increase readability.
+    \end{itemize}
+    \item Figure 3:
+    \begin{itemize}
+        \item Figure redrew.
+        \item Explanation of the information exchanged in each call.
+        \item Add Figure labels to clarify the figure meaning.
+        \item Make the font size bigger to increase readability.
+    \end{itemize}
+    \item Figure 4:
+      \begin{itemize}
+        \item Make the font size bigger to increase readability.
+         \item Add Figure labels to clarify the figure meaning.
+    \end{itemize}
+    \item Figure 6:
+    \begin{itemize}
+        \item Figure redrew.
+        \item Make the font size bigger to increase readability.
+        \item Add Figure labels to clarify the figure meaning.
+    \end{itemize}
+\end{itemize}
+
+\end{response}
+
+\begin{revcomment}
+There is a testbed. Though some interfaces are provided, no measured data or performance criteria (e.g., latency, bandwidth utilization, etc.) are provided, which are necessary to verify the success of the field trial.
+\end{revcomment}
+
+\begin{response}
+The authors redrew Figure 6 to show up the interface utilization in both ends of the VPN. During the test phase, the authors connected two traffic generators to 10G interfaces on the HL5 routers; Figure 6 shows a bandwidth utilization of 93.96\%.
+
+We have also modified the manuscript with the following sentence:
+Figure 6 shows the bandwidth utilization of 93.96\% and 88\% on each end of the VPN service.
+\end{response}
+
+\begin{revcomment}
+There are many abbreviations. For better readability, a table is required to list them.
+\end{revcomment}
+
+\begin{response}
+
+The author included a Table of the abbreviation to increase the text readability.  
+
+\begin{table}[htb!]
+\caption{List of abbreviations used across the document}
+\label{tab:abbreviations}
+\begin{tabular}{|l|l|}
+\hline
+Abbreviation & \multicolumn{1}{c|}{Definition}              \\ \hline
+API          & Application programming interface            \\ \hline
+BGP          & Border Gateway Protocol                      \\ \hline
+BGP-LS       & Border Gateway Protocol Link-State            \\ \hline
+BSS          & Business Support Systems                     \\ \hline
+CE           & Customer Edge                                \\ \hline
+CRUD         & Create, Read, Update and Delete              \\ \hline
+DWDM         & Dense Wavelength Division Multiplexing       \\ \hline
+GMPLS        & General Multi-Protocol Label Switching       \\ \hline
+GUI          & Graphical user interface                     \\ \hline
+IETF         & Internet Engineering Task Force              \\ \hline
+IGP          & Interior Gateway Protocol                    \\ \hline
+IP           & Internet Protocol                            \\ \hline
+L2           & Layer-2                                      \\ \hline
+L2SM         & L2VPN Service Model                          \\ \hline
+L2SM         & L2VPN Service Model                          \\ \hline
+L2NM         & L2VPN Network Model                          \\ \hline
+L3           & Layer-3                                      \\ \hline
+L3SM         & L3VPN Service Model                          \\ \hline
+L3NM         & L3VPN Network Model                          \\ \hline
+LAG          & Link aggregation group                       \\ \hline
+LDP          & Label Distribution Protocol                  \\ \hline
+MPLS         & Multiprotocol Label Switching                \\ \hline
+NBI          & Northbound interface                         \\ \hline
+ONF          & Open Networking Foundation                   \\ \hline
+OSS          & Operation Support Systems                    \\ \hline
+PCE          & Path Computation Element                     \\ \hline
+PE           & Provider Edge                                \\ \hline
+QoS          & Quality of service                           \\ \hline
+RD           & Route Distinguisher                          \\ \hline
+RPC          & Remote Procedure Call                        \\ \hline
+RT           & Route Target                                 \\ \hline
+SBI          & South Bound Interface                        \\ \hline
+SDN          & Software Defined Network                     \\ \hline
+SDNc         & Software Defined Network Controller          \\ \hline
+SDTN         & Software Defined Transport Network           \\ \hline
+TAPI         & Transport API                                \\ \hline
+URI          & Uniform resource identifier                  \\ \hline
+VPN          & Virtual Private Network                      \\ \hline
+VRF          & Virtual Routing and Forwarding               \\ \hline
+YANG         & Yet Another Next Generation                   \\ \hline
+\end{tabular}
+\end{table}
+
+\end{response}
+
+\nextreviewer
+
+\begin{revcomment}
+The organization of the paper is serious unbalanced. As the focus of the paper is the field trial, the authors should focus more on it. But now, the paper only has one section on the field trial, while Sections II and III are on some things that are already well-known to readers in the area. Therefore, I would suggest the authors to shorten Sections II and III and focus more on the field trial.
+\end{revcomment}
+
+\begin{response}
+The authors agree with the reviewer's comment. The authors wrote the paper in tutorial-style, so we provided special attention to Sections II and III. In our humble opinion, we believe that this offers a good balance between the demonstrated field trial and the necessary knowledge to understand it. The  L3/L2 network models have not been presented in any IEEE Network Magazine or similar; thus, we believe that the models must be detailed.
+\end{response}
+
+\begin{revcomment}
+It is not clear to me what the major challenges of the field trial. Note that, L3 VPN service deployment in lab environment has already been demonstrated before. The authors should highlight the new challenges of the field trial, and clarify how they design their systems to address the challenges. However, this part has not been covered in the paper.
+\end{revcomment}
+
+\begin{response}
+To the best of our knowledge, L3 VPN service deployment in lab environment has already been demonstrated before. However, We claim this work as the first implementation of the L3NM mainly because the draft is on track for standardization in the IETF and is process of adoption on the commercial SDN controllers. There are other set of implementations reported using the L3 Service Model (L3SM), but not the L3NM; A part from that, this work has been done in a real network in Telefonica Colombia, which is something has not been reported before. 
+
+The authors added the following sentence in the paper to highlight these results: This work shows, for the first time, a standardized L3NM API to provision and retrieve services to a multi-vendor underlay network. Moreover, this paper presents an infrastructure using network elements in the production network of Telefonica Colombia.
+\end{response}
+
+\begin{revcomment}
+The quality of the figures in the paper is too low. More specifically, the figures bear the following issues. First of all, the texts in the figures are too small. According to the requirement of IEEE, the text font in a figure should not be smaller than that of its caption.
+\end{revcomment}
+
+\begin{response}
+The figures have been redraw to improve its quality, the changes in each figure is the following:
+\begin{itemize}
+    \item Figure 1: 
+    \begin{itemize}
+        \item Labels to explain each component of the figure.
+        \item Make the font size bigger to increase readability.
+    \end{itemize}
+    \item Figure 2:
+    \begin{itemize}
+        \item The authors Included two upper layers (application and Orchestration layer). 
+        \item Protocols and interfaces used between layer.
+        \item The HLx label in the Network layer.
+        \item Make the font size bigger to increase readability.
+    \end{itemize}
+    \item Figure 3:
+    \begin{itemize}
+        \item Figure redrew.
+        \item Explanation of the information exchanged in each call.
+        \item Add Figure labels to clarify the figure meaning.
+        \item Make the font size bigger to increase readability.
+    \end{itemize}
+    \item Figure 4:
+      \begin{itemize}
+        \item Make the font size bigger to increase readability.
+         \item Add Figure labels to clarify the figure meaning.
+    \end{itemize}
+    \item Figure 6:
+    \begin{itemize}
+        \item Figure redrew.
+        \item Make the font size bigger to increase readability.
+        \item Add Figure labels to clarify the figure meaning.
+    \end{itemize}
+\end{itemize}
+\end{response}
+
+\begin{revcomment}
+The technical contents in the paper is relatively low and difficult to be understood, which prevents the readers from getting the big picture of the system or abstracting interesting take-backs. To me, the paper now is more like a manual or testing report. In all, substantial work is needed to get this paper in shape as a tutorial like manuscript.
+\end{revcomment}
+
+\begin{response}
+We agree with reviewer's opinion that readers should get more clearly the take away messages of the manuscript. For this, in conclusions and future work section, we have reworded the take-backs in the manuscript in order to help the readers understand the benefits of the proposed solution. For the rest, we have improved clarity through the manuscript. We strongly believe that the technical contents (such as L2/L3 service and network models) are currently of interest in transport networks community, as their are being discussed at SDO such as IETF. 
+
+\end{response}
+
+
+
+\end{document}
+

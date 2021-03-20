@@ -1,7 +1,6 @@
 %\documentclass[10pt,twocolumn,journal]{IEEEtran}
 %\documentclass[12pt,draftclsnofoot,onecolumn,journal]{IEEEtran}
 \documentclass[10pt, conference]{IEEEtran}
-
 \usepackage[english]{babel}
 \usepackage{url}
 \usepackage{cite}
@@ -17,7 +16,6 @@
 \usepackage{algorithmic}
 \usepackage{caption}
 \usepackage[table]{xcolor}
-
 %\usepackage{subcaption}
 \usepackage{soul}
 \usepackage{subfig}
@@ -28,7 +26,8 @@
 \usepackage[para]{footmisc}
 %\usepackage{changes}
 \usepackage[final]{changes}
-
+%\usepackage{lineno}
+%\linenumbers
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \newcommand{\smartparagraph}[1]{\vspace{.05in}\noindent\textbf{#1}}
 \PassOptionsToPackage{bookmarks=false}{hyperref}
@@ -46,8 +45,6 @@
 
 \begin{document}
 
-%\title{Orchestrating Cooperative Collision Avoidance Service for Connected Vehicles}
-%\title{Orchestrating Containerized Cooperative Perception Service for Connected Vehicles}
 \title{Field trial of programmable L3 VPN service deployment using SDN-Based Multi-domain Service Provisioning over IP/Optical networks}
 
 \author{
@@ -69,7 +66,7 @@ Bengaluru - 560 035, India\\
 
 \begin{abstract}
 %Software-Defined Networking (SDN) is a powerful paradigm already transforming the everyday operations in Telecommunications Networks. SDN came with the idea of decoupling forwarding and control plane in the switches via OpenFlow, but it has evolved to cope with the needs of production networks. 
-Network operators can not change their footprint to upgrade the entire network to support SDN from scratch. This why network operators adapt the original SDN concept into a hybrid SDN approach to have a pragmatic, evolutionary, and economically viable solution. This paper tests an SDN architecture based on a hierarchical structure of a Software-Defined Transport Networking (SDTN) controller, which deals with the end-to-end service provision and topology collection on top of a set of SDN controllers for each technological domain. The authors demonstrate L3/L2 VPN service deployment using an underlay multi-domain IP/Optical networks in a field trial. The approach allows a service provider to migrate brownfield scenarios into SDN domains using programmatic interfaces.
+Network operators can not change their footprint to upgrade the entire Network to support SDN from scratch. \replaced{Hence,}{This why} network operators adapt\added{ed} the original SDN concept into a hybrid SDN approach to have a pragmatic, evolutionary, and economically viable solution. This paper tests an SDN architecture based on a hierarchical structure of a Software-Defined Transport Networking (SDTN) controller, which deals with the end-to-end service provision and topology collection on top of a set of SDN controllers for each technological domain. The authors demonstrate L3/L2 VPN service deployment using an underlay multi-domain IP/Optical networks in a field trial. The approach allows a service provider to migrate brownfield scenarios into SDN domains using programmatic interfaces.
 
 %network islands into SDN domains using programmatic interfaces.
 
@@ -81,11 +78,12 @@ Network operators can not change their footprint to upgrade the entire network t
 %\end{IEEEkeywords}
 
 %\vspace{-0.2in}
+
 \section{Introduction}
 Software-Defined Networking (SDN) has emerged as the new reference paradigm to promote network automation and programmability. It has promoted the idea of a radical transformation in all aspects of the: service delivery, network, and traffic management; because end-to-end automatic service provision, automated monitoring, fast issue detection, and event-based decision taking are mandatory functionalities to offer a high-quality customer experience \cite{ordonez2017network}.
 
 Conceptually, SDN allows a full decoupling between control and forwarding plane on Physical Network Functions (PNFs). 
-This concept allows the centralization of complex processing tasks and enables integrating white boxes (i.e., smaller equipment, high port density, low processing capacity, facts with generic hardware, and lower production cost) in the network access layers. However, this promise is still not a reality on the service provider networks. Although the term SDN seems new, it has already been more than twelve (12) years since a Stanford team defined OpenFlow and founded NICIRA (NICIRA was the first company to develop a commercial SDN controller (NOX)). Nowadays, despite millionaire investments and several SDN controller solutions available \cite{medved2014opendaylight,berde2014onos} on the market, almost no service provider has a full operative SDN network controller deployed. Some of the main barriers found by service providers until now are:
+This concept allows the centralization of complex processing tasks and enables integrating white boxes (i.e., smaller equipment, high port density, low processing capacity, \replaced{made}{facts} with generic hardware, and lower production cost) in the network access layers. However, this promise is still not a reality on the service provider networks. Although the term SDN seems new, it has already been more than twelve (12) years since a Stanford team defined OpenFlow and founded NICIRA (NICIRA was the first company to develop a commercial SDN controller (NOX)). Nowadays, despite millionaire investments and several SDN controller solutions available \cite{medved2014opendaylight,berde2014onos} on the market, almost no service provider has a full operative SDN network controller deployed. Some of the main barriers found by service providers until now are:
 
 \begin{itemize}
     \item There are still many dependencies on manually executing tasks.
@@ -99,11 +97,63 @@ This concept allows the centralization of complex processing tasks and enables i
 Several new approaches have been gradually released in recent years to adopt SDN as a hybrid solution in brownfield scenarios. Some of the most promising methods were defined using agile methodologies, as software development and IT operations (DevOps) solutions \cite{choi2018agile}. 
 These agile methodologies usually take a small network task and solve it using a programmatic approach. It allows the simple and more frequent integration of new functionalities. Network provisioning is one of the recurrent tasks selected for agile automation; because it is a diary job that includes the usage of well-defined templates to deploy MPLS-based services on the network.
 
-The Layer 3 Virtual Private Network (VPN) service defined in RFC 4364 \cite{rosen2006rfc} provides a multi-point, routed service to a customer over an IP/MPLS core. L3VPNs are widely used in carrier-grade networks to deploy 3G/4G, fixed, and enterprise services. Traffic policies can be applied in these services to reuse the same transport network, and it also makes it feasible to combine access technologies over an MPLS core. On the other hand, L2 services belong to the class of IP virtual leased line (VLL) services or virtual private LAN (VPLS) services \cite{andersson2006framework}, which are a fundamental part of the service portfolio offered by service providers. 
+The Layer 3 Virtual Private Network (VPN) service defined in RFC 4364 \cite{rfc4364} provides a multi-point, routed service to a customer over an IP/MPLS core. L3VPNs are widely used in carrier-grade networks to deploy 3G/4G, fixed, and enterprise services. Traffic policies can be applied in these services to reuse the same transport network, and it also makes it feasible to combine access technologies over an MPLS core. On the other hand, L2 services belong to the class of IP virtual leased line (VLL) services or virtual private LAN (VPLS) services \cite{andersson2006framework}, which are a fundamental part of the service portfolio offered by service providers. 
 
 This work proves the viability of the implementations of programmable network interfaces for the deployment of L2/L3 services in IP over optical networks using common standard models and protocols. A field trial including multiple network controllers (two for IP/MPLS and two for DWDM) and a real-commercial-multivendor-operative network was installed by Telefonica in their premises in Colombia to validate the concept.
 
 The paper is structured as follows: \Cref{sec:soa} provides a review of the State of the Art both on the provisioning of automated L2/L3 VPN services. \Cref{section:arq} describes the SDN reference architecture and details the principles of the network programmability, including concepts of YANG and used protocols. Then, Section \ref{section:trial} details the test architecture, including commercial network controllers and the results obtained in this implementation. Finally, conclusions and perspectives are drawn in \Cref{section:conclusions}.    
+
+\added{
+The list of abbreviations and its definition is defined in \cref{tab:abbreviations}.}
+
+\begin{table}[htb!]
+\caption{List of abbreviations used across the document}
+\label{tab:abbreviations}
+\begin{tabular}{|l|l|}
+\hline
+Abbreviation & \multicolumn{1}{c|}{Definition}              \\ \hline
+API          & Application programming interface            \\ \hline
+BGP          & Border Gateway Protocol                      \\ \hline
+BGP-LS       & Border Gateway Protocol Link-State            \\ \hline
+BSS          & Business Support Systems                     \\ \hline
+CE           & Customer Edge                                \\ \hline
+CRUD         & Create, Read, Update and Delete              \\ \hline
+DWDM         & Dense Wavelength Division Multiplexing       \\ \hline
+GMPLS        & General Multi-Protocol Label Switching       \\ \hline
+GUI          & Graphical user interface                     \\ \hline
+IETF         & Internet Engineering Task Force              \\ \hline
+IGP          & Interior Gateway Protocol                    \\ \hline
+IP           & Internet Protocol                            \\ \hline
+L2           & Layer-2                                      \\ \hline
+L2SM         & L2VPN Service Model                          \\ \hline
+L2SM         & L2VPN Service Model                          \\ \hline
+L2NM         & L2VPN Network Model                          \\ \hline
+L3           & Layer-3                                      \\ \hline
+L3SM         & L3VPN Service Model                          \\ \hline
+L3NM         & L3VPN Network Model                          \\ \hline
+LAG          & Link aggregation group                       \\ \hline
+LDP          & Label Distribution Protocol                  \\ \hline
+MPLS         & Multiprotocol Label Switching                \\ \hline
+NBI          & Northbound interface                         \\ \hline
+ONF          & Open Networking Foundation                   \\ \hline
+OSS          & Operation Support Systems                    \\ \hline
+PCE          & Path Computation Element                     \\ \hline
+PE           & Provider Edge                                \\ \hline
+QoS          & Quality of service                           \\ \hline
+RD           & Route Distinguisher                          \\ \hline
+RPC          & Remote Procedure Call                        \\ \hline
+RT           & Route Target                                 \\ \hline
+SBI          & South Bound Interface                        \\ \hline
+SDN          & Software Defined Network                     \\ \hline
+SDNc         & Software Defined Network Controller          \\ \hline
+SDTN         & Software Defined Transport Network           \\ \hline
+TAPI         & Transport API                                \\ \hline
+URI          & Uniform resource identifier                  \\ \hline
+VPN          & Virtual Private Network                      \\ \hline
+VRF          & Virtual Routing and Forwarding               \\ \hline
+YANG         & Yet Another Next Generation                   \\ \hline
+\end{tabular}
+\end{table}
 
 \section{State of the Art}
 \label{sec:soa}
@@ -114,17 +164,17 @@ The IP service models are YANG modules defined to support the creation, deletion
 \label{section:l3nm}
 Multi-Protocol Label Switching (MPLS) Virtual Private Networks (VPNs) have seen an unparalleled increasing adoption during the last years. Although their flexibility as transport technology and their effectiveness for traffic engineering are well recognized, VPNs are hard to set up, operate, and manage, due to the complexity of the network, the protocols involved, and possible multi-vendor parameter discrepancies.
 
-Some service models have been defined and standardized until now to support the L3VPN creation. L3SM \cite{rfc8299} is a Customer Service Model that describes an L3VPN service's configuration parameters based on customer requirements. The L3SM model keeps some commercial customer information as the "customer-site-location". This model provides an abstracted view of the Layer 3 IP VPN service configuration components. However, it is mainly focused on BGP PE-based VPNs and doesn't have specific parameters to configure the different network elements in multi-vendor scenarios nor has the possibility to bind the services with specific transport options inside the MPLS network.  
+Some service models have been defined and standardized until now to support the L3VPN creation. L3SM \cite{rfc8299} is a Customer Service Model that describes an L3VPN service's configuration parameters based on customer requirements. The L3SM model keeps some commercial customer information as the "customer-site-location". This model provides an abstracted view of the Layer 3 IP VPN service configuration components. However, it is mainly focused on \replaced{the provider edge (PE)}{BGP PE-based} VPNs and doesn't have specific parameters to configure the different network elements in multi-vendor scenarios nor has the possibility to bind the services with specific transport options inside the MPLS network.  
 
 L3NM \cite{voyer2019internet} is a complementary Network Model of the L3SM. It differs from the L3SM because it is entirely network-centric and groups all the provider edge routers (PE) configurable parameters. Network controllers can expose the L3NM to manage and control the VPN Service configuration in multi-domain scenarios. It contains valuable information to operate the service, such as each network element's identifier in the IP/MPLS domain (NE-ID) and the interface identifier of each customer access. It includes resources such as Route Targets (RTs) and Route Distinguishers (RDs).
 
-L3NM is populated based on the services request (f.i. L3SM query) and an SDN controller includes network-specific information in the message sent to the domain controllers like transport LSP binding, routing profiles, or encryption profile. It assigns logical resources such as route targets or route distinguishers to keep the data synchronized between domains. \Cref{FIG:l3nm} shows the structure of the L3NM YANG data model, where the main container (VPN Service) is used to group the information of the VPN-Node (VRFs) and the VPN-Network Accesses (Interfaces).
+L3NM is populated based on the services request (f.i. L3SM query) and an \replaced{SDNc}{SDN controller} includes network-specific information in the message sent to the domain controllers like transport LSP binding, routing profiles, or encryption profile. It assigns logical resources such as route targets or route distinguishers to keep the data synchronized between domains. \Cref{FIG:l3nm} shows the structure of the L3NM YANG data model, where the main container (VPN Service) is used to group the information of the VPN-Node (VRFs) and the VPN-Network Accesses (Interfaces).
 
 %In this field trial, the L3NM was used by the hierarchical controller (SDTN) to make the service requests to the IP Domain controllers (IP SDNc). For each service, the SDTN included network-specific information in the message sent to the domain controllers like transport LSP binding, routing profiles, or encryption profile. It assigned logical resources such as route targets or route distinguishers to keep the data synchronized between domains. \Cref{FIG:l3nm} shows the structure of the L3NM YANG data model, where the main container (VPN Service) is used to group the information of the VPN-Node (VRFs) and the VPN-Network Accesses (Interfaces). 
 
 \begin{figure}
 	\centering
-		\includegraphics[width=\linewidth]{figs/diagram-10.png}
+	\includegraphics[width=\linewidth]{figs/diagram-10.png}
 	\caption{L2NM and L3 Data models structures. The hierarchy represents a container in the YANG model. The  lines represents cross references between the containers.}
 	\label{FIG:l3nm} 
 \end{figure}
@@ -164,7 +214,7 @@ This model lacks some specific network parameters; those need to be stored or de
 \label{section:arq}
 \begin{figure*}[htp]
 	\centering
-		\includegraphics[width=\linewidth]{figs/diagram-1.png}
+	\includegraphics[width=\linewidth]{figs/diagram-1.png}
 	\caption{i\uppercase{FUSION}\cite{contreras2019ifusion} architecture has two control layers. The first one having the SDTN controller with the end-to-end view of the network. Second control layer includes the SDN Domain controllers. Those controllers interact with the network devices (Fusion Network). The set of use cases Tested in the POC are listed.}
 	\label{FIG:1}
 \end{figure*}
@@ -182,9 +232,9 @@ The main elements of the SDN i\uppercase{FUSION} architecture are the following:
 
 %\item \textbf{SDN Transport}: It is the whole network controlled by following SDN principles. It is divided into SDN Domains for technology/scalability/administrative principles. A SDN Transport Controller (also referred as SDN Orchestrator), will take care of stitching the different domains/layers/technologies.
 
-\item \textbf{SDN Domain Controller (SDNc)}: This element is in charge of a set of network elements. It has standard southbound interfaces that depend on the technology, but not in the equipment vendor, to communicate with the network elements. It also has a northbound interface to communicate with the SDN Orchestrator and the OSS.
+\item \textbf{SDN Domain Controller (SDNc)}: This element is in charge of a set of network elements. It has standard southbound interfaces that depend on the technology, but not in the equipment vendor, to communicate with the network elements. It also has a northbound interface to communicate with the \replaced{SDTN Controller}{SDTN Orchestrator}.\added{For some use cases, like performance management, the authors initially identified the necessity to connect the OSS layer with the SDNc directly.}
 
-\item \textbf{Software Defined Transport Network (SDTN) Controller}: In case several SDN Domains are needed, the SDN Transport Controller is in charge of providing services through several domains. 
+\item \textbf{Software Defined Transport Network (SDTN) Controller}: In case several SDN Domains are needed, the \replaced{SDTN Controller}{SDN Transport Controller (SDTN}) is in charge of providing\added{/composing} services through several domains. 
 
 %\item \textbf{Southbound Interface}: It is the interface, based on a standard, between the SDN Domain Controller and the Network Element. Not only the communication protocol needs to be standard, but also the data model used.
 
@@ -209,16 +259,16 @@ The SDTN Controller is responsible to orchestrate the respective SDNcs within th
 \label{section:ip}
 Traditionally IP networks are deployed following a regional model mixing equipment from different vendors. The IP boxes are interoperable at both data and control plane levels (e.g., routing protocols such as IS-IS, OSPF, or BGP). Due to scalability and resiliency reasons, the IP administrators divide the whole network into IP domains, so the routing and control protocols are the same in an administrative area.
 
-The goal SDN solution for the IP segment is composed of a single IP SDN controller, whose goal is to configure all the IP network elements. The target SBI for vendor-agnostic device configuration shall be compliant with NETCONF standard protocol. Due to the maturity level, the set of device configuration data models are the ones defined used in i\uppercase{FUSION} are OpenConfig. 
+The goal SDN solution for the IP segment is composed of a single IP \replaced{SDNc}{SDN controller}, whose goal is to configure all the IP network elements. The target SBI for vendor-agnostic device configuration shall be compliant with NETCONF standard protocol. \added{OpenConfig started as a collaborative work between Google, some vendors and Service Providers, and now it is an industrial reference for device-specific configuration purposes. The philosophy behind OpenConfig is to add functionality to the device models based on the operator’s needs to avoid complex models which can not be implemented in real networks.} Due to its maturity level, the set of device configuration data models are the ones defined used in i\uppercase{FUSION} are OpenConfig.
 %The IP SDN-C shall perform TE and PCE tasks. With that purpose, some standard and mature control protocols such PCEP and BGP-LS for MPLS networks, shall be implemented to complete the definition of the SBI. As a result, 
-It is expected that the IP SDN controller will assume the control/management of:
+It is expected that the IP \replaced{SDNc}{SDN controller} will assume the control/management of:
 \begin{itemize}
 \item Device configuration of interfaces (VLANs) and routing protocols (BGP, ISIS, …)
 \item Traffic Engineering of MPLS tunnels (LSPs). 
 \item Overlay networks services (L2/L3 VPNs) device configuration (VRFs,\dots)
 \end{itemize}
 
-The IP SDNc will be the main entry point to the network elements, to avoid overloading the elements with external requests and providing a  full and coherent network view. The NBI of the controller in i\uppercase{FUSION} follows IETF YANG models and they are implemented on RESTCONF with JSON encoding.
+The IP SDNc will be the main entry point to the network elements, to avoid overloading the elements with external requests and providing a  full and coherent network view. The NBI of the controller in i\uppercase{FUSION} follows IETF YANG models and they are implemented on RESTCONF with JSON encoding. \added{The IETF YANG for the NBI  was done based on the support of the supplier to the models. The IETF adoption is wider than any other alternative for the NBI.}
 
 %The NBI shall provide to higher entities within the SDN hierarchy:
 %\begin{itemize}
@@ -235,7 +285,7 @@ Optical transport networks from different system vendors are deployed on a regio
 
 Without line-side interoperability of the different optical transceivers and Reconfigurable Optical Add-Drop Multiplexers (ROADMs), there is not a competitive advantage on a uniform configuration interface of the optical devices, since they cannot neither be mixed in a multi-vendor scenario, due to the fact that both line systems and transceivers must be from the same vendor.
 
-With this in mind, in the short term, Optical SDNc are expected to provide network programmability and interoperability towards upper layers (multi-layer) and between vendors (multi-domain, multi-vendor) through the support of standard NBIs (i.e. coordination will be provided by upper layer hierarchical SDTN). This short term approach will enable the setup and tear down of connections in optical channels (OCh and ODU layers), the discovery of the network resources to compose a layered uniform view based on the OTN hierarchy, and the monitoring of the optical network in a vendor agnostic fashion thanks to the utilization of ONF Transport API (T-API) 2.1 \cite{lopez2016transport}, having been experimented in several proof of concepts \cite{mayoral2016first}. Please note, that in this transport domain, T-API + RESTCONF is also proposed to be the NBI of the hierarchical SDTN Controller towards Service B/OSS layers.
+With this in mind, in the short term, Optical SDNc are expected to provide network programmability and interoperability towards upper layers (multi-layer) and between vendors (multi-domain, multi-vendor) through the support of standard NBIs (i.e. coordination will be provided by upper layer hierarchical SDTN \added{Controller}). This short term approach will enable the setup and tear down of connections in optical channels (OCh and ODU layers), the discovery of the network resources to compose a layered uniform view based on the OTN hierarchy, and the monitoring of the optical network in a vendor agnostic fashion thanks to the utilization of ONF Transport API (T-API) 2.1 \cite{lopez2016transport}, having been experimented in several proof of concepts \cite{mayoral2016first}. Please note, that in this transport domain, T-API + RESTCONF is also proposed to be the NBI of the hierarchical SDTN Controller towards Service B/OSS layers.
 
 %The Hybrid SDN architecture proposed is compatible with a legacy control scenario where a distributed GMPLS control plane has already been deployed. GMPLS control plane can be centrally managed by a SDN domain controller by well-know and mature control protocols, such as PCEP, OSPF and/or BGP-LS already supported in GMPLS devices, benefiting the gradual introduction of SDN. However, current NMS solutions shall evolve to, or co-exist with, the SDN Controller model, enabling network programmability through its NBIs while keeping the current offered features for network creation, resources discovery and monitoring and service creation for L0/L1 layers. Standardization efforts targeting the definition of standard NBIs that can facilitate multi-vendor interoperability (by maintaining administrative domains for each vendor) such as ONF Transport API (T-API) \cite{lopez2016transport} and IETF models \cite{rfc8299} are the more promising definitions to implement such capabilities by abstracting the specific configuration of current distributed control planes embedded in Automatic Switched Optical Network (ASON) architectures. 
 %i\uppercase{FUSION} relays on ONF Transport API 2.1 as as the reference NBI for the SDN implementation in the optical transport segment, having been experimented in several proof of concepts \cite{mayoral2016first}. 
@@ -310,9 +360,9 @@ In the medium and long term, the direct programmability of the components can ha
 
 %Moreover, the Media Channel layer the available resources for the reservation of  spectrum resources for a given OTSi channel. The concatenated reserved portion of the along a route is represented as a Media-Channel (MC) construct, and by the OTSiMC construct which represents the actual portion of the spectrum occupied by the signal (MC spectrum must be wider than the OTSiMC). These modelling concepts are critical for the realization of the Open Line System concept introduced by the partially disaggregation of the optical networks. See \ref{FIG:Media_channel} graphical representation for more clarity.
 
-\subsection{Integration of SDTN in the overall operator’s systems architecture}
+\subsection{Integration of SDTN \added{Controller} in the overall operator’s systems architecture}
 \label{section:sdtn}
-One of the main reasons for deploying an SDTN controller is service automation. It facilitates that manual services and network configurations become automated and available through its NBIs, enabling the network automation progressively. As the main design principle, the abstraction level provided by the SDTN can be different based on the needs of consumers. Thus, the information exported through the NBI towards OSS and other platforms will cover several functional areas with several levels of abstraction: (1) network topology, (2) service provisioning, (3) performance management, (4) network planning and design, and (5) fault management. 
+One of the main reasons for deploying an SDTN Controller is service automation. It facilitates that manual services and network configurations become automated and available through its NBIs, enabling the network automation progressively. As the main design principle, the abstraction level provided by the SDTN \added{Controller} can be different based on the needs of consumers. Thus, the information exported through the NBI towards OSS and other platforms will cover several functional areas with several levels of abstraction: (1) network topology, (2) service provisioning, (3) performance management, (4) network planning and design, and (5) fault management. 
 %\begin{itemize}
 %    \item \textbf{Network topology}: An hierarchical topology view of the network % resources, based on the OSI layers.
 %    \item \textbf{Service’s provisioning}: The available set of network services % to different clients.
@@ -345,7 +395,7 @@ One of the main reasons for deploying an SDTN controller is service automation. 
 %\end{adjustbox}
 %\end{table}
 
-Network topology and service provisioning are tested in this paper, the full set of use cases tested as described in the \cref{FIG:1}. Progressively, the SDTN will include the rest of the functionalities (marked as planned). On its SBI, the SDTN will integrate with the domain controllers. Each SDNc shall expose vendor-agnostic network-level programmability and resource discovery functionalities. So the SDTN will be able to perform the correct data integration and functionalities exposure.
+Network topology and service provisioning are tested in this paper, the full set of use cases tested as described in the \cref{FIG:1}. Progressively, the SDTN \added{Controller} will include the rest of the functionalities (marked as planned). On its SBI, the SDTN \added{Controller} will integrate with the domain controllers. Each SDNc shall expose vendor-agnostic network-level programmability and resource discovery functionalities. So the SDTN \added{Controller} will be able to perform the correct data integration and functionalities exposure.
 
 %On its SBI, the SDTN will integrate with the domain controllers; Each Transport SDN-C shall expose vendor-agnostic network-level programmability and resource discovery functionalities. So the SDTN will be able to perform the correct data integration and exposure.
 
@@ -381,16 +431,16 @@ Network topology and service provisioning are tested in this paper, the full set
 
 The L3VPNs services are not exclusive of single domain implementations; multi-domain IP L3VPN is a common requirement in the service providers. Multi-domain services include: multiple-AS, multiple-IGPs, or multiple-vendor segmentations. Based on this, a set of interactions with more than one IP SDNc may be required to accomplish the service provision process.
 
-The scope of this work includes two IP domains connected by a common core; The IP domains were part of a different IGP process, so each network has its own IP SDNc. Each of the controllers has implemented the IETF L3NM model described in subsection \ref{section:l3nm} to support the service creation requirements. We have proved the SDTN as a network orchestrator to create a multi-domain L3VPN, delegating the required provision parameters to each domain controller and after exposing a unified view of it.
+The scope of this work includes two IP domains connected by a common core; The IP domains were part of a different IGP process, so each network has its own IP SDNc. Each of the controllers has implemented the IETF L3NM model described in subsection \ref{section:l3nm} to support the service creation requirements. We have proved the SDTN \added{Controller} as a network orchestrator to create a multi-domain L3VPN, delegating the required provision parameters to each domain controller and after exposing a unified view of it.
 
 \begin{figure}
 	\centering
-		\includegraphics[scale=0.65]{figs/diagram-9.png}
+		\includegraphics[width=\linewidth]{figs/diagram-9.png}
 	\caption{Messages Interchange for IP multi-domain L3VPN service creation.}
 	\label{FIG:l3vpn_workflow}
 \end{figure}
 
-The parameters delegation done by the SDTN had the following four steps per domain.
+The parameters delegation done by the SDTN \added{Controller} had the following four steps per domain.
 \begin{enumerate}
     \item Create Site: Indicates the place where the services end-points are located. It unclude magement information and service descriptions. 
     \item Create Bearer: Indicates the NE and the Port assigned to the service.
@@ -476,7 +526,7 @@ The SDN control layer architecture was built upon the reference design guideline
     \item 2 x Optical SDNcs one for each optical domain.
 \end{itemize}
 
-SDNcs communicate with NEs via NETCONF/YANG and RESTCONF/YANG with SDTN using the Data Communication Network (DCN). The optical and IP SDNcs are commercial products from the network element vendors.  
+SDNcs communicate with NEs via NETCONF/YANG and RESTCONF/YANG with SDTN \added{Controller} using the Data Communication Network (DCN). The optical and IP SDNcs are commercial products from the network element vendors.  
 
 %In other hand, from the Optical perspective, SDN-Cs follow a similar integration. At SBI, OpenROADM + OpenConfig models are used on top of NETconf/YANG protocol. At NBI, a T-API v2.1 implementation is used.  
 
@@ -607,24 +657,24 @@ Two-vendor WDM infrastructures transported the IP/MPLS links of vendor B HL2s an
 
 \subsection{Multi-domain IP L3VPN provisioning}
 
-This section presents the test results for the Hierarchical SDTN Controller integration with the controllers in the IP/Optical domains. Two types of tests have been done to demonstrate orchestration functionalities in the multi-layer/multi-domain/multi-vendor network environment, as depicted in \Cref{FIG:testing_workflow}. In a first stage, each SDN controller was validated individually. RESTCONF-based queries were sent towards each of the SDNCs to change and retrieve the network information and validate each implementation's compliance. This initial certification aimed to make functional tests over each solution and speed-up the entire solution's final integration. The scalability and efficiency of the SDTN solution is limited to the SDNc performance.
+This section presents the test results for the Hierarchical SDTN Controller integration with the controllers in the IP/Optical domains. Two types of tests have been done to demonstrate orchestration functionalities in the multi-layer/multi-domain/multi-vendor network environment, as depicted in \Cref{FIG:testing_workflow}. In a first stage, each \replaced{SDNc}{SDN controller} was validated individually. RESTCONF-based queries were sent towards each of the SDNCs to change and retrieve the network information and validate each implementation's compliance. This initial certification aimed to make functional tests over each solution and speed-up the entire solution's final integration. The scalability and efficiency of the SDTN \added{Controller} solution is limited to the SDNc performance.
 
 \begin{figure}
 	\centering
 		\includegraphics[width=\linewidth]{figs/diagram-11.png}
-	\caption{The two types of tests have been done in order to demonstrate orchestration functionalities in the multi-layer/multi-domain/multi-vendor network environment}. (1) Hardening process includes single domain tests. (2) End to end integration includes the SDTN delegation of resources to the domain controllers.
+	\caption{The two types of tests have been done in order to demonstrate orchestration functionalities in the multi-layer/multi-domain/multi-vendor network environment. (1) Hardening process includes single domain tests. (2) End to end integration includes the SDTN \added{Controller} delegation of resources to the domain controllers.}
 	\label{FIG:testing_workflow}
 \end{figure}
 
 \begin{figure*}
 	\centering
 		\includegraphics[width=\linewidth]{figs/diagram-14.png}
-	\caption{L3VPN service creation results retrieved from the SDTN GUI. Included three visualization panes: The service details (Name, Topology, RD and Endpoints), the geographical view and the hop-by-hop connection view.}
+	\caption{L3VPN service creation results retrieved from the SDTN \added{Controller} GUI. Included three visualization panes: The service details (Name, Topology, RD and Endpoints), the geographical view and the hop-by-hop connection view.}
 	\label{FIG:l3vpn_results}
 \end{figure*}
 
 
-Once each domain controller was independently certified during the individual validation process, the end-to-end integration was done using multi-domain functional tests. In that case, the Transcend Meastro GUI was used to orchestrate the entire service lifecycle. For example,  to create a service between two domains, the SDTN provided a Graphical template to fill the service creation parameters. The parameters depicted in \Cref{FIG:l3vpn_results} includes the user-defined configuration requirements and the auto-assigned parameters by the SDTN. In both cases, the SDTN stored the whole service resources, and It continuously monitors the network state to keep the set of values synchronized. The workflow used is by the SDTN is depicted in \Cref{FIG:l3vpn_workflow}. Each time a user created a service, a set of request calls was instantiated between the SDTN and the corresponding SDNc. Finally, once the SDNc confirms the service creation to the SDTN, the Transcend Maestro provided three visualization options: (1) Service details, (2) Geographical view, and (3) Layered view, as depicted in \Cref{FIG:l3vpn_results}.
+Once each domain controller was independently certified during the individual validation process, the end-to-end integration was done using multi-domain functional tests. In that case, the Transcend Meastro GUI was used to orchestrate the entire service lifecycle. For example,  to create a service between two domains, the SDTN \added{Controller} provided a Graphical template to fill the service creation parameters. The parameters depicted in \Cref{FIG:l3vpn_results} includes the user-defined configuration requirements and the auto-assigned parameters by the SDTN \added{Controller}. In both cases, the SDTN \added{Controller} stored the whole service resources, and It continuously monitors the network state to keep the set of values synchronized. The workflow used is by the SDTN is depicted in \Cref{FIG:l3vpn_workflow}. Each time a user created a service, a set of request calls was instantiated between the SDTN \added{Controller} and the corresponding SDNc. Finally, once the SDNc confirms the service creation to the SDTN \added{Controller}, the Transcend Maestro provided three visualization options: (1) Service details, (2) Geographical view, and (3) Layered view, as depicted in \Cref{FIG:l3vpn_results}.
 
 %Aiming to demonstrate the multi-domain/multi-vendor capabilities of the SDTN solution, a scenario for an L3VPN service configuration was proposed. The main goal was to create a L3VPN between two access routers, each of them located in different IP domains. The IP domains are connected using a DWDM optical network. The L3VPN service was created using the SDTN GUI and the configuration parameters used for this matter are shown on Table \ref{TAB:discovered_ip_l3vpn}.
 %The workflow between the SDTN and the IP Controller for the l3vpn creation has been summarized in the UML model presented on \cref{FIG:testing_workflow}. 
@@ -637,7 +687,7 @@ Once each domain controller was independently certified during the individual va
 
 \begin{figure*}
 	\centering
-		\includegraphics[width=\linewidth]{figs/counters.png}
+		\includegraphics[width=\linewidth]{figs/counters1.png}
 	\caption{Traffic counters measured on the end-points of the service. The utilization in both ends is close to 95\% due to the traffic injected by the generator.}
 	\label{FIG:counters}
 \end{figure*}
@@ -674,7 +724,7 @@ Once each domain controller was independently certified during the individual va
 % \end{table}
 
 
-The configuration of the IP L3VPN service in the network elements was verified by using their command line interface as well as the IP-SDN controllers GUI. To validate the data plane, a traffic generator was used in site to introduce traffic on both ends of the network and tested the multi-domain L3VPN service. \Cref{FIG:counters} shows the traffic statistics as seen on the command-line interface of the PE routers. In this figure, the two interfaces connected to the VPN services are selected, and their traffic counters are showed. The occupancy of the 10G ports is close to the 95\% during the test. 
+The configuration of the IP L3VPN service in the network elements was verified by using their command line interface as well as the IP\replaced{SDNc}{-SDN controllers} GUI. To validate the data plane, a traffic generator was used in site to introduce traffic on both ends of the network and tested the multi-domain L3VPN service. \Cref{FIG:counters} shows the traffic statistics as seen on the command-line interface of the PE routers. In this figure, the two interfaces connected to the VPN services are selected, and their traffic counters are showed. \replaced{Figure 6 shows the bandwidth utilization of 93.96\% and 88\% on each end of the VPN service.}{The occupancy of the 10G ports is close to the 95\% during the test.} 
 
 %\subsection{Optical provisioning}
 %From the perspective of the optical networks, single domain unconstrained DSR connectivity services as well as Photonic Media Layer services were independently configured in both vendors’ DWDM networks and were verified in the respective NMS systems. The ONF T-API 2.1 YANG data model has been used for the query exchange between the SDTN HCO and the optical domain controllers given the support of this standard model in their NBIs. The UML diagram on \ref{FIG:optical_provisioning_workflow} shows the HTTP POST request involved in the optical circuit creation as sent from the SDTN HCO towards the Optical SDNCs, as well as the HTTP GET requests for information retrieval regarding particular connectivity services existing on the network. 
@@ -704,9 +754,9 @@ The configuration of the IP L3VPN service in the network elements was verified b
 \label{section:conclusions}
 %A key angular stone for the SDTN Architecture is the data models themselves. RESTCONF/YANG based with IETF were preferred when beginning with the integration between SDTN and the SDN-Cs, the main focus was the use of a standardized API to access and retrieve the required information from the IP and Optical controllers. The usage of different pseudo-standard and reduced models was needed in order to execute the different test case scenarios. IETF YANG data models for the IP World still require additional efforts to fit in all the MPLS-based use cases as a synergy flow. 
 
-A key angular stone for the SDN adoption in service provider networks is the definition of the data models and protocols to be used by the architecture components for the integration between them. Historically, integration using proprietary interfaces delay the introduction of programmability and automation and have a high economic cost. In this work, RESTCONF with IETF YANG models was tested for the integration between the SDTN and the IP SDNcs. The main focus was the validate a standardized API to provision and retrieve services to a multi-vendor underlay network.
+\replaced{It is fundamental for the SDN adoption in service provider networks defining the data models and protocols used across the components.}{A key angular stone for the SDN adoption in service provider networks is the definition of the data models and protocols to be used by the architecture components for the integration between them.} Historically, integration using proprietary interfaces delay the introduction of programmability and automation and have a high economic cost. In this work, RESTCONF with IETF YANG models was tested for the integration between the SDTN \added{Controller} and the IP SDNcs. \added{This work shows, for the first time,} a standardized \added{L3NM} API to provision and retrieve services to a multi-vendor underlay network. \added{Moreover, this paper presents an infrastructure using network elements in the production network of Telefonica Colombia.}
 
-The tests included the provision of L3VPN using IETF YANG data models and the topology collection. The SDTN orchestrated the service creation assigning the resources to each domain controller. During the service retrieval, the SDTN composed the services based on the information exposed by the domain controllers.
+The tests included the provision of L3VPN using IETF YANG data models and the topology collection. The SDTN \added{Controller} orchestrated the service creation assigning the resources to each domain controller. During the service retrieval, the SDTN \added{Controller} composed the services based on the information exposed by the domain controllers.
 
 For additional tasks, there are still gaps to cover all the IP/MPLS network operation requirements. A brief summary of the issues faced during the integration, as reference point to future work are: 
 
@@ -715,22 +765,21 @@ For additional tasks, there are still gaps to cover all the IP/MPLS network oper
     \item \textit{Ghost} objects which would not be completely deleted in the controllers can lead to misunderstand in the topology construction.
     \item The unsolicited data retrieved by a lack of standardization or a bias in the implementation of the standards can lead to uncompleted transactions or loops in execution tasks.
     \item Absence of data in the SDN domain controllers for an automatic inter-domain link discovery.
-    \item Differences in the RESTCONF/YANG implementations on the SDN Controllers. Even if the YANG models were the same, the parameters translation between NBI and SBI can restrict some configurable parameters (i.e max length size of a description field) and may generate implementation differences. This would derive in possible errors during the execution of the creation process.
+    \item Differences in the RESTCONF/YANG implementations on the \replaced{SDNc}{SDN Controllers}. Even if the YANG models were the same, the parameters translation between NBI and SBI can restrict some configurable parameters (i.e max length size of a description field) and may generate implementation differences. This would derive in possible errors during the execution of the creation process.
     \item Differences in the RESTCONF/YANG error handling. A set of well defined error codes is mandatory in the hierarchical architecture.
 \end{itemize}
 
 %However, except for the lack of the inter-domain ports exposure on the IP domains as well as the retrieval of data required for automatic discovery of Inter-Domain Links (e.g. \texttt{Plug-ID} and TTI values), 
 
-The APIs designed in this work demonstrates the viability of the i\uppercase{FUSION} architecture with an SDTN orchestrating an underlay multi-vendor, multi-layer, and multi-domain network environment. The i\uppercase{FUSION} APIs allow any service provider to migrate brownfield scenarios into SDN-ready domains using programmatic interfaces.
+The APIs designed in this work demonstrates the viability of the i\uppercase{FUSION} architecture with an SDTN \added{Controller} orchestrating an underlay multi-vendor, multi-layer, and multi-domain network environment. The i\uppercase{FUSION} APIs allow any service provider to migrate brownfield scenarios into SDN-ready domains using programmatic interfaces.
 
 \subsection{Future Work}
-As future work, the hybrid SDN deployment done until now must be complemented with an integration between the NBI exposed by the SDTN and the OSS applications ecosystem. The OSS ecosystem can include for example strategic and tactical planning applications, able to support the year by year demand management and planning tasks done within the organization. A common interface defined and available for these tasks would allow the OSS systems providers to focus on the quality of the applications developed, forgetting the complexity of the network management. Economically it will generate direct reductions in the applications integration time.
+As future work, the hybrid SDN deployment done until now must be complemented with an integration between the NBI exposed by the SDTN \added{Controller} and the OSS applications ecosystem. The OSS ecosystem can include for example strategic and tactical planning applications, able to support the year by year demand management and planning tasks done within the organization. A common interface defined and available for these tasks would allow the OSS systems providers to focus on the quality of the applications developed, forgetting the complexity of the network management. Economically it will generate direct reductions in the applications integration time.
 
 %Additionally, the scope of this work can be extended to cover Traffic Engineering use cases. Standardization in the NBI requests to support the LSPs creation will enable easy management of the traffic flows in the network, generating a real massification of the Traffic Engineering deployment and creating new network optimization solutions for the operators.
 
 \section*{Acknowledgements}
-This is work has been supported by Telefonica I+D as part of the Fusion, i\uppercase{FUSION}, OpenFusion projects and partially funded by the EC 5GPPP TeraFlow (101015857) and MINECO AURORAS (RTI2018-099178-B-I00). Authors would like to thank to all the SDN technical teams and leaders that participate in the development, deployment, and testing of this SDTN architecture. Many thanks for their contributions to Manuel Santiago, Gloria Gomez, Julia Rodriguez and Zdravko Stevkovski from Infinera, Randy Quimbay, David Rocha from Telefonica Colombia, and Andrea Valencia, Juan Suarez, Juan Agredo and Daniel Hernandez from Wipro.   
-
+This \deleted{is} work has been supported by Telefonica I+D as part of the Fusion, i\uppercase{FUSION}, OpenFusion projects and partially funded by the EC 5GPPP TeraFlow (101015857) and MINECO AURORAS (RTI2018-099178-B-I00). Authors would like to thank to all the SDN technical teams and leaders that participate in the development, deployment, and testing of this \deleted{SDTN} architecture. Many thanks for their contributions to Manuel Santiago, Gloria Gomez, Julia Rodriguez and Zdravko Stevkovski from Infinera, Randy Quimbay, David Rocha from Telefonica Colombia, and Andrea Valencia, Juan Suarez, Juan Agredo and Daniel Hernandez from Wipro.   
 
 %\bibliographystyle{ieeetr}
 \bibliographystyle{IEEEtran}
